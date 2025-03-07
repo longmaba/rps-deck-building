@@ -156,15 +156,22 @@ class UI {
             }
           }
         } else {
-          // Regular card - add to battle (removed the 5-card limit)
-          const index = this.game.player.hand.indexOf(card);
-          if (index !== -1) {
-            this.game.player.selectCardForBattle(index);
-            this.updateHand();
-            this.updateBattleCards();
+          // Regular card - add to battle if we have space (less than 5 cards)
+          if (this.game.player.battleCards.length < 5) {
+            const index = this.game.player.hand.indexOf(card);
+            if (index !== -1) {
+              const selectedCard = this.game.player.selectCardForBattle(index);
+              if (selectedCard) {
+                this.updateHand();
+                this.updateBattleCards();
 
-            // Update battle button state
-            this.updateButtons();
+                // Update battle button state
+                this.updateButtons();
+              }
+            }
+          } else {
+            // Show a message if trying to add more than 5 cards
+            this.showMessage("You can only select up to 5 cards for battle");
           }
         }
       });
@@ -203,15 +210,18 @@ class UI {
 
   /**
    * Update opponent's cards display
+   * This shows either the opponent's selected battle cards during comparison phase
+   * or card backs representing their hand during preparation phase
    */
   updateOpponentCards() {
     const opponentCardsElement = this.elements.opponentCards;
     opponentCardsElement.innerHTML = "";
 
-    // For real game, we'd show back of cards or placeholder during preparation
+    // During preparation phase, we show card backs for the cards in opponent's hand
     if (this.game.phase === "preparation") {
-      // Show opponent hand count
-      for (let i = 0; i < this.game.opponent.hand.length; i++) {
+      // Show card backs for opponent's prepared battle cards
+      const cardCount = Math.min(5, this.game.opponent.battleCards.length);
+      for (let i = 0; i < cardCount; i++) {
         const cardBack = document.createElement("div");
         cardBack.className = "card card-back";
 
@@ -222,14 +232,16 @@ class UI {
 
         const cardBackLabel = document.createElement("div");
         cardBackLabel.className = "card-back-label";
-        cardBackLabel.textContent = "Opponent Card";
+        cardBackLabel.textContent = "Ready for Battle";
 
         cardBack.appendChild(cardBackInner);
         cardBack.appendChild(cardBackLabel);
 
         opponentCardsElement.appendChild(cardBack);
       }
-    } else if (this.game.phase === "comparison") {
+    }
+    // During comparison phase, we reveal the opponent's actual battle cards
+    else if (this.game.phase === "comparison") {
       // Show opponent's battle cards during comparison
       for (const card of this.game.opponent.battleCards) {
         const cardElement = card.createElement();
@@ -269,15 +281,15 @@ class UI {
 
       if (result.winner === "player") {
         resultIndicator.textContent = "👑 Player wins";
-        resultIndicator.style.color = "#4CAF50";
-        playerCardElement.style.boxShadow = "0 0 10px 3px #4CAF50";
+        resultIndicator.style.color = "#5cef8d";
+        playerCardElement.style.boxShadow = "0 0 10px 3px #5cef8d";
       } else if (result.winner === "opponent") {
         resultIndicator.textContent = "👑 Opponent wins";
-        resultIndicator.style.color = "#F44336";
-        opponentCardElement.style.boxShadow = "0 0 10px 3px #F44336";
+        resultIndicator.style.color = "#ff5c5c";
+        opponentCardElement.style.boxShadow = "0 0 10px 3px #ff5c5c";
       } else {
         resultIndicator.textContent = "🤝 Tie";
-        resultIndicator.style.color = "#FFC107";
+        resultIndicator.style.color = "#ffbe3d";
       }
 
       // Add damage indicator

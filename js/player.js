@@ -67,7 +67,10 @@ class Player {
       return null;
     }
 
-    // No limit on battle cards anymore, allow any number
+    // Reinstate the 5-card limit for battle cards
+    if (this.battleCards.length >= 5) {
+      return null;
+    }
 
     const card = this.hand.splice(handIndex, 1)[0];
 

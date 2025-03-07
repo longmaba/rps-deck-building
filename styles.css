@@ -288,68 +288,68 @@ h1 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 0, 255, 0.5);
 }
 
-.card-header, .card-footer {
+.card-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     z-index: 2;
-}
-
-.card-type {
-    font-weight: bold;
-    font-size: 12px;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: white;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-}
-
-.card-variant {
-    font-size: 10px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 18px;
-    height: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
+    margin-bottom: 5px;
 }
 
 .card-damage {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
-    padding: 2px 6px;
+    padding: 2px 8px;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .card-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 28px;
-    height: 50px;
+    font-size: 36px;
+    height: 80px;
     z-index: 2;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin: auto;
 }
 
-.card-effect {
-    font-size: 8px;
+/* Tooltip styling enhancements */
+.card {
+    position: relative;
+}
+
+/* Custom tooltip effect */
+.card::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
     text-align: center;
-    height: 24px;
-    overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding: 4px;
-    border-radius: 4px;
-    z-index: 2;
-    color: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    font-size: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    line-height: 1.4;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card:hover::after {
+    opacity: 1;
+    visibility: visible;
 }
 
 #game-controls {
@@ -551,13 +551,12 @@ button:disabled:before, button:disabled:hover:before {
     }
     
     .card-content {
-        font-size: 22px;
-        height: 40px;
+        font-size: 32px;
+        height: 70px;
     }
     
-    .card-effect {
-        font-size: 7px;
-        height: 20px;
+    .card-damage {
+        font-size: 14px;
     }
     
     #battle-area {
@@ -586,23 +585,14 @@ button:disabled:before, button:disabled:hover:before {
         height: 90px;
     }
     
-    .card-type, .card-damage {
-        font-size: 10px;
-    }
-    
-    .card-variant {
-        font-size: 8px;
+    .card-damage {
+        font-size: 12px;
+        padding: 2px 6px;
     }
     
     .card-content {
-        font-size: 18px;
-        height: 30px;
-    }
-    
-    .card-effect {
-        font-size: 6px;
-        height: 16px;
-        padding: 2px;
+        font-size: 28px;
+        height: 60px;
     }
     
     #opponent-deck-stats {

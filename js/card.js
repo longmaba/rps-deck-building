@@ -254,50 +254,28 @@ class Card {
     cardElement.className = `card ${this.type} ${this.variant}`;
     cardElement.dataset.id = this.id;
 
+    // Add title attribute for tooltip with variant description
+    cardElement.title = `${this.description} - ${this.effect}`;
+
+    // Create header with damage value only (for non-utility cards)
     const cardHeader = document.createElement("div");
     cardHeader.className = "card-header";
 
-    const cardType = document.createElement("div");
-    cardType.className = "card-type";
-    cardType.textContent = this.type.charAt(0).toUpperCase();
+    if (this.type !== "utility") {
+      const cardDamage = document.createElement("div");
+      cardDamage.className = "card-damage";
+      cardDamage.textContent = this.damage;
+      cardHeader.appendChild(cardDamage);
+    }
 
-    const cardVariant = document.createElement("div");
-    cardVariant.className = "card-variant";
-    cardVariant.textContent = this.variant.charAt(0).toUpperCase();
-
-    cardHeader.appendChild(cardType);
-    cardHeader.appendChild(cardVariant);
-
+    // Main card content showing the symbol
     const cardContent = document.createElement("div");
     cardContent.className = "card-content";
     cardContent.textContent = this.symbol;
 
-    const cardEffect = document.createElement("div");
-    cardEffect.className = "card-effect";
-    cardEffect.textContent = this.effect;
-
-    const cardFooter = document.createElement("div");
-    cardFooter.className = "card-footer";
-
-    const cardDescription = document.createElement("div");
-    cardDescription.className = "card-description";
-    cardDescription.textContent = this.type;
-
-    const cardDamage = document.createElement("div");
-    cardDamage.className = "card-damage";
-    cardDamage.textContent = this.damage;
-
-    cardFooter.appendChild(cardDescription);
-
-    // Only show damage for non-utility cards
-    if (this.type !== "utility") {
-      cardFooter.appendChild(cardDamage);
-    }
-
+    // Add all elements to the card
     cardElement.appendChild(cardHeader);
     cardElement.appendChild(cardContent);
-    cardElement.appendChild(cardEffect);
-    cardElement.appendChild(cardFooter);
 
     this.element = cardElement;
     return cardElement;
