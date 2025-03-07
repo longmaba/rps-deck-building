@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rock Paper Scissors Roguelike</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="game-header">
+            <h1><i class="fas fa-gamepad"></i> RPS Roguelike</h1>
+            <div id="player-stats">
+                <div id="player-hp"><i class="fas fa-heart"></i> HP: <span id="player-hp-value">20</span></div>
+                <div id="player-gold"><i class="fas fa-coins"></i> Gold: <span id="player-gold-value">0</span></div>
+            </div>
+        </div>
+
+        <div id="game-area">
+            <div id="opponent-area">
+                <div id="opponent-info">
+                    <div id="opponent-name"><i class="fas fa-robot"></i> <span id="opponent-name-value">Opponent</span>
+                    </div>
+                    <div id="opponent-hp"><i class="fas fa-heart-broken"></i> HP: <span id="opponent-hp-value">20</span>
+                    </div>
+                </div>
+                <div id="opponent-stats">
+                    <div id="opponent-deck-stats">
+                        <span class="stat-label"><i class="fas fa-layer-group"></i> Deck:</span>
+                        <span class="stat-rock"><i class="fas fa-hand-rock"></i> <span
+                                id="opponent-rock-count">0</span></span>
+                        <span class="stat-paper"><i class="fas fa-hand-paper"></i> <span
+                                id="opponent-paper-count">0</span></span>
+                        <span class="stat-scissors"><i class="fas fa-hand-scissors"></i> <span
+                                id="opponent-scissors-count">0</span></span>
+                        <span class="stat-utility"><i class="fas fa-magic"></i> <span
+                                id="opponent-utility-count">0</span></span>
+                    </div>
+                </div>
+                <div id="opponent-cards" class="card-area"></div>
+            </div>
+
+            <div id="battle-area">
+                <div id="comparison-results"></div>
+            </div>
+
+            <div id="player-area">
+                <div class="area-label">Your Battle Cards</div>
+                <div id="player-battle-cards" class="card-area"></div>
+                <div class="area-label">Your Hand</div>
+                <div id="player-hand" class="card-area"></div>
+            </div>
+        </div>
+
+        <div id="game-controls">
+            <button id="start-battle" disabled><i class="fas fa-crosshairs"></i> Battle</button>
+            <button id="end-turn" disabled><i class="fas fa-forward"></i> End Turn</button>
+        </div>
+
+        <div id="game-messages"></div>
+    </div>
+
+    <div id="game-overlay" class="hidden">
+        <div id="game-dialog">
+            <h2 id="dialog-title"></h2>
+            <div id="dialog-content"></div>
+            <button id="dialog-button">OK</button>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/card.js"></script>
+    <script src="js/deck.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/opponent.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
