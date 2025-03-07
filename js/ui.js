@@ -275,35 +275,58 @@ class UI {
       const playerCardElement = result.playerCard ? result.playerCard.createElement() : createPlaceholder();
       const opponentCardElement = result.opponentCard ? result.opponentCard.createElement() : createPlaceholder();
 
+      // Create card containers to position cards consistently
+      const opponentCardContainer = document.createElement("div");
+      opponentCardContainer.className = "card-container";
+      opponentCardContainer.appendChild(opponentCardElement);
+
+      const playerCardContainer = document.createElement("div");
+      playerCardContainer.className = "card-container";
+      playerCardContainer.appendChild(playerCardElement);
+
       // Add result indicator
       const resultIndicator = document.createElement("div");
       resultIndicator.className = "result-indicator";
 
+      // Add damage information to the indicator instead of separate element
+      let resultText = "";
       if (result.winner === "player") {
-        resultIndicator.textContent = "👑 Player wins";
+        resultText = result.damage > 0 ? `👑 Player wins` : "👑 Player wins";
         resultIndicator.style.color = "#5cef8d";
         playerCardElement.style.boxShadow = "0 0 10px 3px #5cef8d";
+
+        // Add damage badge to winning card if there's damage
+        if (result.damage > 0) {
+          const damageBadge = document.createElement("div");
+          damageBadge.className = "damage-badge";
+          damageBadge.textContent = `-${result.damage}`;
+          damageBadge.style.color = "#ff5c5c";
+          opponentCardContainer.appendChild(damageBadge);
+        }
       } else if (result.winner === "opponent") {
-        resultIndicator.textContent = "👑 Opponent wins";
+        resultText = result.damage > 0 ? `👑 Opponent wins` : "👑 Opponent wins";
         resultIndicator.style.color = "#ff5c5c";
         opponentCardElement.style.boxShadow = "0 0 10px 3px #ff5c5c";
+
+        // Add damage badge to winning card if there's damage
+        if (result.damage > 0) {
+          const damageBadge = document.createElement("div");
+          damageBadge.className = "damage-badge";
+          damageBadge.textContent = `-${result.damage}`;
+          damageBadge.style.color = "#ff5c5c";
+          playerCardContainer.appendChild(damageBadge);
+        }
       } else {
-        resultIndicator.textContent = "🤝 Tie";
+        resultText = "🤝 Tie";
         resultIndicator.style.color = "#ffbe3d";
       }
 
-      // Add damage indicator
-      if (result.damage > 0) {
-        const damageIndicator = document.createElement("div");
-        damageIndicator.className = "damage-indicator";
-        damageIndicator.textContent = `Damage: ${result.damage}`;
-        resultElement.appendChild(damageIndicator);
-      }
+      resultIndicator.textContent = resultText;
 
       // Add all elements to the result container
-      resultElement.appendChild(opponentCardElement);
+      resultElement.appendChild(opponentCardContainer);
       resultElement.appendChild(resultIndicator);
-      resultElement.appendChild(playerCardElement);
+      resultElement.appendChild(playerCardContainer);
 
       resultsElement.appendChild(resultElement);
     }
